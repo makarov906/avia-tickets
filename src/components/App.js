@@ -1,9 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react'
+import Logo from './Logo'
+import styled from 'styled-components'
+import Layout from './Layout'
 
-class App extends Component {
-    render() {
-        return <div className="App" />
-    }
-}
+const Container = styled.div`
+    width: 818px;
+    margin: 0 auto;
+`
 
-export default App
+export default () => (
+    <Container>
+        <Logo />
+        <Layout />
+    </Container>
+)
