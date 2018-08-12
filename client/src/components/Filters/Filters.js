@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Checkbox from '../ui/Checkbox'
 import Button from '../ui/Button'
+import { currency } from "../../utils";
 
 const Filters = styled.div`
     flex-basis: 232px;
@@ -83,18 +84,18 @@ const Block = styled.div`
     margin-bottom: ${props => !props.last && '32px'};
 `
 
-export default ({ checkboxes, onChangeCheckbox, currency, onChangeCurrency }) => (
+export default ({ checkboxes, onChangeCheckbox, currentCurrency, onChangeCurrency }) => (
     <Filters>
         <Block>
             <Title>Валюта</Title>
             <ButtonContainer>
-                <Button onClick={() => onChangeCurrency('rub')} active={currency === 'rub'}>
+                <Button onClick={() => onChangeCurrency(currency.rub)} active={currentCurrency === currency.rub}>
                     rub
                 </Button>
-                <Button onClick={() => onChangeCurrency('usd')} active={currency === 'usd'}>
+                <Button onClick={() => onChangeCurrency(currency.usd)} active={currentCurrency === currency.usd}>
                     usd
                 </Button>
-                <Button onClick={() => onChangeCurrency('eur')} active={currency === 'eur'}>
+                <Button onClick={() => onChangeCurrency(currency.eur)} active={currentCurrency === currency.eur}>
                     eur
                 </Button>
             </ButtonContainer>

@@ -3,7 +3,7 @@ import Filters from './Filters/Filters'
 import Tickets from './Tickets/Tickets'
 import styled from 'styled-components'
 import FilterController from './Filters/FilterController'
-import { getStopsCountName, getTickets } from '../utils'
+import { getStopsCountName, getTickets, getCourse, currency } from '../utils'
 
 const Layout = styled.div`
     display: flex;
@@ -14,7 +14,7 @@ export default class extends Component {
     state = {
         tickets: [],
         stopsFilters: [{ name: 'Все', value: 'all', checked: true }],
-        currency: 'rub',
+        currentCurrency: currency.rub,
     }
 
     componentDidMount() {
@@ -39,10 +39,19 @@ export default class extends Component {
         })
     }
 
-    onChangeCurrency = name => {
-        this.setState({
-            currency: name,
-        })
+    onChangeCurrency = currencyName => {
+        if (currencyName !== this.state.currentCurrency) {
+            console.log(currencyName);
+            getCourse(this.state.currentCurrency, currencyName).then(course => {
+                this.setState(prevState => ({
+                    tickets: prevState.tickets.map(ticket => ({
+                        ...ticket,
+                        price: ticket.price * course,
+                    })),
+                    currentCurrency: currencyName,
+                }))
+            })
+        }
     }
 
     onChangeCheckbox = (checkbox, uncheckOther = false) => {
@@ -73,13 +82,13 @@ export default class extends Component {
     }
 
     render() {
-        const { tickets, stopsFilters, currency } = this.state
+        const { tickets, stopsFilters, currentCurrency } = this.state
         let availableStops = stopsFilters.filter(cb => cb.checked).map(cb => cb.value)
 
         return (
             <Layout>
                 <Filters
-                    currency={currency}
+                    currentCurrency={currentCurrency}
                     onChangeCurrency={this.onChangeCurrency}
                     checkboxes={stopsFilters}
                     onChangeCheckbox={this.onChangeCheckbox}
