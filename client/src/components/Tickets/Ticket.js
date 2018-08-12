@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import aviaIcon from './avia.svg'
+import {companyLogo} from '../../constants'
 
 const Ticket = styled.div`
     width: 566px;
@@ -109,7 +110,7 @@ export default ({ ticket = {} }) => (
     <Ticket>
         <div className="ticket__buy-section">
             <div className="ticket__company-logo">
-                <img src={ticket.logo} alt="" />
+                <img src={companyLogo(ticket.carrier)} alt="" />
             </div>
             <button className="ticket__buy-button">
                 Купить <br /> за 21 032

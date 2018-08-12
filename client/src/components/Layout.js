@@ -9,8 +9,6 @@ const Layout = styled.div`
     justify-content: space-between;
 `
 
-const companyLogo = (carrier, width = 120, height = 50) => `http://pics.avs.io/${width}/${height}/${carrier}.png`
-
 function getName(stopsCount) {
     if (stopsCount === 0) {
         return 'Без пересадок'
@@ -53,12 +51,16 @@ export default class extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            tickets: this.state.tickets.map(t => ({
-                ...t,
-                logo: companyLogo(t.carrier),
-            })),
-        })
+        fetch('http://localhost:5000/api/tickets')
+            .then(res => res.json())
+            .then(res => {
+                this.setState({
+                    tickets: res.tickets.map((ticket, idx) => ({
+                        ...ticket,
+                        id: idx
+                    }))
+                })
+            })
     }
 
     onChangeCurrency = name => {

@@ -1,11 +1,4 @@
-// немного упоролся и написал ДКА для управления состояниями фильтров, чтоб ифами не мусорить
 export default class FilterController {
-    constructor(filters) {
-        this.build(filters)
-    }
-
-    build(filters) {}
-
     static toggle(items, item, only) {
         if (item.value === 'all') {
             if (items.filter(item => item.value === 'all')[0].checked) {

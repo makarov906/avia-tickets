@@ -84,8 +84,6 @@ const Block = styled.div`
 `
 
 export default class extends Component {
-
-
     render() {
         const {onChangeCheckbox, onChangeCurrency, currency, values} = this.props
         return (
