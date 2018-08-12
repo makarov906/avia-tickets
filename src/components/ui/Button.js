@@ -22,7 +22,7 @@ const Button = styled.button`
     &:hover {
         background-color: ${props => (props.isActive ? '#2196F3' : '#f2fcff')};
         border: 1px solid ${props => (props.isActive ? '#2196F3' : '#64b5f5')};
-        z-index: 1;
+        z-index: ${props => (!props.isActive && '1')};
     }
 `
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Checkbox from './ui/Checkbox'
-import Button from './ui/Button'
+import Checkbox from '../ui/Checkbox'
+import Button from '../ui/Button'
 
 const Filters = styled.div`
     min-width: 232px;
@@ -29,6 +29,8 @@ const FilterItem = styled.div`
 
         a {
             opacity: 1;
+            transform: translateY(0);
+            transition: transform .1s, opacity .1s;
         }
     }
 
@@ -39,9 +41,10 @@ const FilterItem = styled.div`
         letter-spacing: 0.5px;
         font-weight: bold;
         text-transform: uppercase;
-        transition: opacity 0.2s;
         position:absolute;
         right: 15px;
+        transform: translateY(-10px);
+        transition: transform .1s, opacity .1s;
     }
 `
 
@@ -81,52 +84,28 @@ const Block = styled.div`
 `
 
 export default class extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            checked: false,
-        }
-    }
 
-    onChange = (e, checked) => {
-        console.log(checked)
-        this.setState({
-            checked,
-        })
-    }
 
     render() {
+        const {onChangeCheckbox, onChangeCurrency, currency, values} = this.props
         return (
             <Filters>
                 <Block>
                     <Title>Валюта</Title>
                     <ButtonContainer>
-                        <Button active>rub</Button>
-                        <Button>usd</Button>
-                        <Button>eur</Button>
+                        <Button onClick={() => onChangeCurrency('rub')} active={currency === 'rub'}>rub</Button>
+                        <Button onClick={() => onChangeCurrency('usd')} active={currency === 'usd'}>usd</Button>
+                        <Button onClick={() => onChangeCurrency('eur')} active={currency === 'eur'}>eur</Button>
                     </ButtonContainer>
                 </Block>
                 <Block last>
                     <Title>Количество пересадок</Title>
-                    <FilterItem>
-                        <Checkbox title="Все" value={this.state.checked} onChange={this.onChange} />
-                    </FilterItem>
-                    <FilterItem>
-                        <Checkbox title="Без пересадок" value={this.state.checked} onChange={this.onChange} />
-                        <a>Только</a>
-                    </FilterItem>
-                    <FilterItem>
-                        <Checkbox title="1 пересадка" value={this.state.checked} onChange={this.onChange} />
-                        <a>Только</a>
-                    </FilterItem>
-                    <FilterItem>
-                        <Checkbox title="2 пересадки" value={this.state.checked} onChange={this.onChange} />
-                        <a>Только</a>
-                    </FilterItem>
-                    <FilterItem>
-                        <Checkbox title="3 пересадки" value={this.state.checked} onChange={this.onChange} />
-                        <a>Только</a>
-                    </FilterItem>
+                    {values.map(val => (
+                        <FilterItem key={val.value}>
+                            <Checkbox title={val.name} value={val.checked} onChange={() => onChangeCheckbox(val)} />
+                            { val.value !== 'all' && <a onClick={() => onChangeCheckbox(val, true)}>Только</a> }
+                        </FilterItem>
+                    ))}
                 </Block>
             </Filters>
         )
