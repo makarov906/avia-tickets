@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import aviaIcon from './avia.svg'
-import { getCompanyLogo, getStopsCountName, formatNumber, formatTime, getWeekDay } from '../../utils'
+import {getCompanyLogo, getStopsCountName, formatNumber, formatTime, getWeekDay, breakpoint} from '../../utils'
 
 const Ticket = styled.div`
     margin-bottom: 20px;
@@ -10,11 +10,20 @@ const Ticket = styled.div`
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.15);
     display: flex;
 
+    @media screen and (max-width: ${breakpoint.ticket}) {
+        flex-direction: column;
+    }
+
     .ticket {
         &__buy-section {
             flex-basis: 200px;
             padding: 25px 20px;
             border-right: 1px solid #eceff1;
+            
+            @media screen and (max-width: ${breakpoint.ticket}) {
+                flex-basis: 0;
+                padding-bottom: 0;
+            }
         }
 
         &__buy-button {
@@ -41,7 +50,7 @@ const Ticket = styled.div`
         }
 
         &__fly-info {
-            padding: 25px 20px 0;
+            padding: 25px 20px;
             flex-grow: 1;
         }
 

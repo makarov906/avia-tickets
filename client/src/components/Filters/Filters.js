@@ -5,7 +5,6 @@ import StopsFilter from './StopsFilter'
 import FilterSection from './FilterSection'
 
 const Filters = styled.div`
-    flex-basis: 232px;
     background-color: #fff;
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.15);
     padding: 17px 15px 13px;

@@ -3,11 +3,30 @@ import Filters from './Filters/Filters'
 import Tickets from './Tickets/Tickets'
 import styled from 'styled-components'
 import FilterController from './Filters/FilterController'
-import { getStopsCountName, getTickets, getCourse, currency } from '../utils'
+import { getStopsCountName, getTickets, getExchangeCourse, currency, breakpoint } from '../utils'
 
 const Layout = styled.div`
     display: flex;
     justify-content: space-between;
+
+    @media screen and (max-width: ${breakpoint.screen}) {
+        flex-direction: column;
+    }
+`
+
+const TicketsContainer = styled.div`
+    flex-basis: 566px;
+    width: 100%;
+`
+
+const FiltersContainer = styled.div`
+    flex-basis: 232px;
+    width: 100%;
+
+    @media screen and (max-width: ${breakpoint.screen}) {
+        margin-bottom: 20px;
+        flex-basis: 0;
+    }
 `
 
 export default class extends Component {
@@ -44,7 +63,7 @@ export default class extends Component {
             this.setState({
                 currentCurrency: currencyName,
             })
-            getCourse(this.state.currentCurrency, currencyName).then(course => {
+            getExchangeCourse(this.state.currentCurrency, currencyName).then(course => {
                 this.setState(prevState => ({
                     tickets: prevState.tickets.map(ticket => ({
                         ...ticket,
@@ -84,17 +103,21 @@ export default class extends Component {
 
     render() {
         const { tickets, stopsFilters, currentCurrency } = this.state
-        let availableStops = stopsFilters.filter(cb => cb.checked).map(cb => cb.value)
+        const availableStops = stopsFilters.filter(cb => cb.checked).map(cb => cb.value)
 
         return (
             <Layout>
-                <Filters
-                    currentCurrency={currentCurrency}
-                    onChangeCurrency={this.onChangeCurrency}
-                    checkboxes={stopsFilters}
-                    onChangeCheckbox={this.onChangeCheckbox}
-                />
-                <Tickets availableStops={availableStops} tickets={tickets} />
+                <FiltersContainer>
+                    <Filters
+                        currentCurrency={currentCurrency}
+                        onChangeCurrency={this.onChangeCurrency}
+                        checkboxes={stopsFilters}
+                        onChangeCheckbox={this.onChangeCheckbox}
+                    />
+                </FiltersContainer>
+                <TicketsContainer>
+                    <Tickets availableStops={availableStops} tickets={tickets} />
+                </TicketsContainer>
             </Layout>
         )
     }

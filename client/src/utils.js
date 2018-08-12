@@ -1,5 +1,10 @@
 import numeral from 'numeral'
 
+export const breakpoint = {
+    screen: '838px',
+    ticket: '550px',
+}
+
 export const getCompanyLogo = (carrier, width = 120, height = 50) =>
     `http://pics.avs.io/${width}/${height}/${carrier}.png`
 
@@ -8,7 +13,7 @@ export const getTickets = () =>
         .then(res => res.json())
         .then(res => res.tickets)
 
-export const getCourse = cache((from, to) =>
+export const getExchangeCourse = cache((from, to) =>
     fetch(`https://exchangeratesapi.io/api/latest?base=${from}&symbols=${to}`)
         .then(res => res.json())
         .then(res => res.rates[to]),
