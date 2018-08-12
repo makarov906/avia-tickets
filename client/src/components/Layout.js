@@ -41,13 +41,15 @@ export default class extends Component {
 
     onChangeCurrency = currencyName => {
         if (currencyName !== this.state.currentCurrency) {
+            this.setState({
+                currentCurrency: currencyName,
+            })
             getCourse(this.state.currentCurrency, currencyName).then(course => {
                 this.setState(prevState => ({
                     tickets: prevState.tickets.map(ticket => ({
                         ...ticket,
                         price: ticket.price * course,
                     })),
-                    currentCurrency: currencyName,
                 }))
             })
         }
