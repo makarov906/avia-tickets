@@ -47,3 +47,13 @@ export function formatNumber(number, sectionLength = 3, delimiter = ' ') {
 
     return res.join(delimiter)
 }
+
+export function formatTime(time) {
+    const splitted = time.split(':')
+    let hour = splitted[0]
+    hour = hour.length < 2 ? '0' + hour : hour
+    let minute = splitted[1]
+    minute = minute.length < 2 ? '0' + minute : minute
+
+    return hour + ':' + minute
+}

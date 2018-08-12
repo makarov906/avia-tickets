@@ -1,5 +1,5 @@
 export default class FilterController {
-    static toggle(items, item, only) {
+    static toggle(items, item) {
         if (item.value === 'all') {
             if (items.filter(item => item.value === 'all')[0].checked) {
                 return items.map(it => ({
@@ -12,21 +12,6 @@ export default class FilterController {
                 ...it,
                 checked: true,
             }))
-        }
-
-        if (only) {
-            return items.map(
-                it =>
-                    it.value === item.value
-                        ? {
-                              ...it,
-                              checked: true,
-                          }
-                        : {
-                              ...it,
-                              checked: false,
-                          },
-            )
         }
 
         const newItems = items.map(

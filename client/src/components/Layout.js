@@ -13,7 +13,7 @@ const Layout = styled.div`
 export default class extends Component {
     state = {
         tickets: [],
-        stopsFilters: [{ name: 'Все', value: 'all', checked: false }],
+        stopsFilters: [{ name: 'Все', value: 'all', checked: true }],
         currency: 'rub',
     }
 
@@ -32,7 +32,7 @@ export default class extends Component {
                         .map(count => ({
                             name: getStopsCountName(count),
                             value: count,
-                            checked: false,
+                            checked: true,
                         })),
                 ),
             }))
@@ -45,14 +45,36 @@ export default class extends Component {
         })
     }
 
-    onChangeCheckbox = (item, only = false) => {
+    onChangeCheckbox = (checkbox, uncheckOther = false) => {
+        if (uncheckOther) {
+            this.uncheckAllExcept(checkbox)
+        } else {
+            this.setState(prevState => ({
+                stopsFilters: FilterController.toggle(prevState.stopsFilters, checkbox),
+            }))
+        }
+    }
+
+    uncheckAllExcept(checkbox) {
         this.setState(prevState => ({
-            stopsFilters: FilterController.toggle(prevState.stopsFilters, item, only),
+            stopsFilters: prevState.stopsFilters.map(
+                cb =>
+                    cb.value === checkbox.value
+                        ? {
+                              ...cb,
+                              checked: true,
+                          }
+                        : {
+                              ...cb,
+                              checked: false,
+                          },
+            ),
         }))
     }
 
     render() {
         const { tickets, stopsFilters, currency } = this.state
+        let availableStops = stopsFilters.filter(cb => cb.checked).map(cb => cb.value)
 
         return (
             <Layout>
@@ -62,7 +84,7 @@ export default class extends Component {
                     checkboxes={stopsFilters}
                     onChangeCheckbox={this.onChangeCheckbox}
                 />
-                <Tickets tickets={tickets} />
+                <Tickets availableStops={availableStops} tickets={tickets} />
             </Layout>
         )
     }

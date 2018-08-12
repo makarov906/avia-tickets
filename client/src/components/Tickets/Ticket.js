@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import aviaIcon from './avia.svg'
-import { getCompanyLogo, getStopsCountName, formatNumber } from '../../utils'
+import { getCompanyLogo, getStopsCountName, formatNumber, formatTime } from '../../utils'
 
 const Ticket = styled.div`
     margin-bottom: 20px;
@@ -116,7 +116,7 @@ export default ({ ticket = {} }) => (
         </div>
         <div className="ticket__fly-info">
             <div className="ticket__line">
-                <div className="ticket__time origin">{ticket.departure_time}</div>
+                <div className="ticket__time origin">{formatTime(ticket.departure_time)}</div>
                 <div className="ticket__transfers">
                     <div className="ticket__transfers-count">{getStopsCountName(ticket.stops)}</div>
                     <div className="ticket__divider">
@@ -124,7 +124,7 @@ export default ({ ticket = {} }) => (
                         <img src={aviaIcon} alt="" />
                     </div>
                 </div>
-                <div className="ticket__time destination">{ticket.arrival_time}</div>
+                <div className="ticket__time destination">{formatTime(ticket.arrival_time)}</div>
             </div>
 
             <div className="ticket__line">
