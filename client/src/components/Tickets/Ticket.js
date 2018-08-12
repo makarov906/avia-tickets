@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import aviaIcon from './avia.svg'
-import { getCompanyLogo, getStopsCountName, formatNumber, formatTime } from '../../utils'
+import { getCompanyLogo, getStopsCountName, formatNumber, formatTime, getWeekDay } from '../../utils'
 
 const Ticket = styled.div`
     margin-bottom: 20px;
@@ -137,8 +137,8 @@ export default ({ ticket = {} }) => (
             </div>
 
             <div className="ticket__line">
-                <div className="ticket__date origin">{ticket.departure_date}, Пт</div>
-                <div className="ticket__date destination">{ticket.arrival_date}, Пт</div>
+                <div className="ticket__date origin">{ticket.departure_date}, {getWeekDay(ticket.departure_date)}</div>
+                <div className="ticket__date destination">{ticket.arrival_date}, {getWeekDay(ticket.arrival_date)}</div>
             </div>
         </div>
     </Ticket>

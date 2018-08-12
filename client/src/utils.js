@@ -11,7 +11,8 @@ export const getTickets = () =>
 export const getCourse = cache((from, to) =>
     fetch(`https://exchangeratesapi.io/api/latest?base=${from}&symbols=${to}`)
         .then(res => res.json())
-        .then(res => res.rates[to]))
+        .then(res => res.rates[to]),
+)
 
 function cache(func) {
     let cache = {}
@@ -32,6 +33,14 @@ export const currency = {
     rub: 'RUB',
     usd: 'USD',
     eur: 'EUR',
+}
+
+const weekDays = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
+export function getWeekDay(dateString) {
+    const splitted = dateString.split('.')
+    const date = new Date(splitted[1] + '.' + splitted[0] + '.' + splitted[2])
+
+    return weekDays[date.getDay()]
 }
 
 export function getStopsCountName(stopsCount) {
@@ -58,7 +67,9 @@ export function getStopsCountName(stopsCount) {
 }
 
 export function formatNumber(number, sectionLength = 3, delimiter = ' ') {
-    return numeral(number).format('0,0.[00]').replace(',', ' ')
+    return numeral(number)
+        .format('0,0.[00]')
+        .replace(/,/g, ' ')
 }
 
 export function formatTime(time) {
