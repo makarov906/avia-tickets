@@ -19,6 +19,9 @@ function cache(func) {
     return (...args) => {
         if (!cache[args]) {
             cache[args] = func(...args)
+            setTimeout(() => {
+                delete cache[args]
+            }, 30 * 60 * 1000)
         }
 
         return cache[args]

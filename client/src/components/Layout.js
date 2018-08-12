@@ -41,7 +41,6 @@ export default class extends Component {
 
     onChangeCurrency = currencyName => {
         if (currencyName !== this.state.currentCurrency) {
-            console.log(currencyName);
             getCourse(this.state.currentCurrency, currencyName).then(course => {
                 this.setState(prevState => ({
                     tickets: prevState.tickets.map(ticket => ({
