@@ -1,11 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import aviaIcon from './avia.svg'
-import {companyLogo} from '../../constants'
+import { getCompanyLogo, getStopsCountName, formatNumber } from '../../utils'
 
 const Ticket = styled.div`
-    width: 566px;
-    height: 161px;
     margin-bottom: 20px;
     background: #fff;
     border-radius: 5px;
@@ -41,7 +39,7 @@ const Ticket = styled.div`
         &__company-logo {
             text-align: center;
         }
-        
+
         &__fly-info {
             padding: 25px 20px 0;
             flex-grow: 1;
@@ -110,33 +108,37 @@ export default ({ ticket = {} }) => (
     <Ticket>
         <div className="ticket__buy-section">
             <div className="ticket__company-logo">
-                <img src={companyLogo(ticket.carrier)} alt="" />
+                <img src={getCompanyLogo(ticket.carrier)} alt="" />
             </div>
             <button className="ticket__buy-button">
-                Купить <br /> за 21 032
+                Купить <br /> за {formatNumber(ticket.price)}
             </button>
         </div>
         <div className="ticket__fly-info">
             <div className="ticket__line">
-                <div className="ticket__time origin">09:25</div>
+                <div className="ticket__time origin">{ticket.departure_time}</div>
                 <div className="ticket__transfers">
-                    <div className="ticket__transfers-count">1 пересадка</div>
+                    <div className="ticket__transfers-count">{getStopsCountName(ticket.stops)}</div>
                     <div className="ticket__divider">
-                        <div className="ticket__divider-line"/>
-                        <img src={aviaIcon} alt=""/>
+                        <div className="ticket__divider-line" />
+                        <img src={aviaIcon} alt="" />
                     </div>
                 </div>
-                <div className="ticket__time destination">11:45</div>
+                <div className="ticket__time destination">{ticket.arrival_time}</div>
             </div>
 
             <div className="ticket__line">
-                <div className="ticket__airport origin">VVO, Владивосток</div>
-                <div className="ticket__airport destination">Тель-Авиа, TLV</div>
+                <div className="ticket__airport origin">
+                    {ticket.origin}, {ticket.origin_name}
+                </div>
+                <div className="ticket__airport destination">
+                    {ticket.destination_name}, {ticket.destination}
+                </div>
             </div>
 
             <div className="ticket__line">
-                <div className="ticket__date origin">9 окт 2018, Пт</div>
-                <div className="ticket__date destination">10 окт 2018, Пт</div>
+                <div className="ticket__date origin">{ticket.departure_date}, Пт</div>
+                <div className="ticket__date destination">{ticket.arrival_date}, Пт</div>
             </div>
         </div>
     </Ticket>

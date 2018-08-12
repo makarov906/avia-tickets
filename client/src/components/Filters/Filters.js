@@ -4,7 +4,7 @@ import Checkbox from '../ui/Checkbox'
 import Button from '../ui/Button'
 
 const Filters = styled.div`
-    min-width: 232px;
+    flex-basis: 232px;
     background-color: #fff;
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.15);
     padding: 17px 15px 13px;
@@ -18,10 +18,10 @@ const FilterItem = styled.div`
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    position:relative;
+    position: relative;
 
     label {
-      padding: 0 15px;
+        padding: 0 15px;
     }
 
     &:hover {
@@ -30,7 +30,7 @@ const FilterItem = styled.div`
         a {
             opacity: 1;
             transform: translateY(0);
-            transition: transform .1s, opacity .1s;
+            transition: transform 0.1s, opacity 0.1s;
         }
     }
 
@@ -41,10 +41,10 @@ const FilterItem = styled.div`
         letter-spacing: 0.5px;
         font-weight: bold;
         text-transform: uppercase;
-        position:absolute;
+        position: absolute;
         right: 15px;
         transform: translateY(-10px);
-        transition: transform .1s, opacity .1s;
+        transition: transform 0.1s, opacity 0.1s;
     }
 `
 
@@ -83,29 +83,34 @@ const Block = styled.div`
     margin-bottom: ${props => !props.last && '32px'};
 `
 
-export default class extends Component {
-    render() {
-        const {onChangeCheckbox, onChangeCurrency, currency, values} = this.props
-        return (
-            <Filters>
-                <Block>
-                    <Title>Валюта</Title>
-                    <ButtonContainer>
-                        <Button onClick={() => onChangeCurrency('rub')} active={currency === 'rub'}>rub</Button>
-                        <Button onClick={() => onChangeCurrency('usd')} active={currency === 'usd'}>usd</Button>
-                        <Button onClick={() => onChangeCurrency('eur')} active={currency === 'eur'}>eur</Button>
-                    </ButtonContainer>
-                </Block>
-                <Block last>
-                    <Title>Количество пересадок</Title>
-                    {values.map(val => (
-                        <FilterItem key={val.value}>
-                            <Checkbox title={val.name} value={val.checked} onChange={() => onChangeCheckbox(val)} />
-                            { val.value !== 'all' && <a onClick={() => onChangeCheckbox(val, true)}>Только</a> }
-                        </FilterItem>
-                    ))}
-                </Block>
-            </Filters>
-        )
-    }
-}
+export default ({ checkboxes, onChangeCheckbox, currency, onChangeCurrency }) => (
+    <Filters>
+        <Block>
+            <Title>Валюта</Title>
+            <ButtonContainer>
+                <Button onClick={() => onChangeCurrency('rub')} active={currency === 'rub'}>
+                    rub
+                </Button>
+                <Button onClick={() => onChangeCurrency('usd')} active={currency === 'usd'}>
+                    usd
+                </Button>
+                <Button onClick={() => onChangeCurrency('eur')} active={currency === 'eur'}>
+                    eur
+                </Button>
+            </ButtonContainer>
+        </Block>
+        <Block last>
+            <Title>Количество пересадок</Title>
+            {checkboxes.map(checkbox => (
+                <FilterItem key={checkbox.value}>
+                    <Checkbox
+                        title={checkbox.name}
+                        value={checkbox.checked}
+                        onChange={() => onChangeCheckbox(checkbox)}
+                    />
+                    {checkbox.value !== 'all' && <a onClick={() => onChangeCheckbox(checkbox, true)}>Только</a>}
+                </FilterItem>
+            ))}
+        </Block>
+    </Filters>
+)
