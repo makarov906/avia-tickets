@@ -13,4 +13,6 @@ body {
 body {
     font-family: 'Open Sans', sans-serif;
     background: #F3F7FA;
+    margin-left: calc(100vw - 100%);
+    margin-right: 0;
 }
