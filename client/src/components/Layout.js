@@ -75,29 +75,8 @@ export default class extends Component {
     }
 
     onChangeCheckbox = (checkbox, uncheckOther = false) => {
-        if (uncheckOther) {
-            this.uncheckAllExcept(checkbox)
-        } else {
-            this.setState(prevState => ({
-                stopsFilters: FilterController.toggle(prevState.stopsFilters, checkbox),
-            }))
-        }
-    }
-
-    uncheckAllExcept(checkbox) {
         this.setState(prevState => ({
-            stopsFilters: prevState.stopsFilters.map(
-                cb =>
-                    cb.value === checkbox.value
-                        ? {
-                              ...cb,
-                              checked: true,
-                          }
-                        : {
-                              ...cb,
-                              checked: false,
-                          },
-            ),
+            stopsFilters: FilterController.toggle(prevState.stopsFilters, checkbox, uncheckOther),
         }))
     }
 

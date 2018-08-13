@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import aviaIcon from './avia.svg'
-import {getCompanyLogo, getStopsCountName, formatNumber, formatTime, getWeekDay, breakpoint} from '../../utils'
+import { getCompanyLogo, getStopsCountName, formatNumber, formatTime, getWeekDay, breakpoint } from '../../utils'
 
 const Ticket = styled.div`
     margin-bottom: 20px;
@@ -19,7 +19,7 @@ const Ticket = styled.div`
             flex-basis: 200px;
             padding: 25px 20px;
             border-right: 1px solid #eceff1;
-            
+
             @media screen and (max-width: ${breakpoint.ticket}) {
                 flex-basis: 0;
                 padding-bottom: 0;
@@ -146,8 +146,12 @@ export default ({ ticket = {} }) => (
             </div>
 
             <div className="ticket__line">
-                <div className="ticket__date origin">{ticket.departure_date}, {getWeekDay(ticket.departure_date)}</div>
-                <div className="ticket__date destination">{ticket.arrival_date}, {getWeekDay(ticket.arrival_date)}</div>
+                <div className="ticket__date origin">
+                    {ticket.departure_date}, {getWeekDay(ticket.departure_date)}
+                </div>
+                <div className="ticket__date destination">
+                    {ticket.arrival_date}, {getWeekDay(ticket.arrival_date)}
+                </div>
             </div>
         </div>
     </Ticket>

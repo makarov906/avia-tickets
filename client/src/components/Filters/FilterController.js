@@ -1,5 +1,20 @@
 export default class FilterController {
-    static toggle(items, item) {
+    static toggle(items, item, uncheckOther) {
+        if (uncheckOther) {
+            return items.map(
+                it =>
+                    it.value === item.value
+                        ? {
+                              ...it,
+                              checked: true,
+                          }
+                        : {
+                              ...it,
+                              checked: false,
+                          },
+            )
+        }
+
         if (item.value === 'all') {
             if (items.filter(item => item.value === 'all')[0].checked) {
                 return items.map(it => ({
